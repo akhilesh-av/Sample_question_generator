@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Generator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+      color: #111;
+      min-height: 100vh;
+      padding: 2rem;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-size: 0.8rem; color: #666; margin-bottom: 0.35rem; }
+    select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ddd;
+      background: #fff;
+      font-size: 0.95rem;
+    }
+    .btn {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.6rem;
+      background: #111;
+      color: #fff;
+      border: none;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .btn:hover { background: #333; }
+    .flash { font-size: 0.85rem; margin-bottom: 1rem; padding: 0.5rem 0; }
+    .flash.error { color: #c00; }
+  </style>
+</head>
+<body>
+  <h1>Question Generator</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('generate') }}" method="post">
+    <div class="form-group">
+      <label for="topic">Topic</label>
+      <select name="topic" id="topic" required>
+        <option value="">Select</option>
+        {% for t in topics %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="difficulty">Difficulty</label>
+      <select name="difficulty" id="difficulty" required>
+        <option value="">Select</option>
+        {% for d in difficulties %}<option value="{{ d }}">{{ d }}</option>{% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn">Generate 10</button>
+  </form>
+</body>
+</html>
