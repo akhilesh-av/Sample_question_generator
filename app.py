@@ -14,7 +14,7 @@ from groq import Groq
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=str(Path(__file__).resolve().parent))
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-in-production")
 
 # Paths
